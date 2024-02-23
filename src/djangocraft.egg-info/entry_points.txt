@@ -1,0 +1,2 @@
+[console_scripts]
+djangocraft = djangocraft.__main__:app
