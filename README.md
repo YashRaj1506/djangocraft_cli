@@ -45,6 +45,8 @@ djangocraft uses python and a lot of packages like:
 
 ## Installation
 
+first create a virtual environment and then,
+
         pip install djangocraft
 
 commands:
