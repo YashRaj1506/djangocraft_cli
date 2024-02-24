@@ -1,2 +1,3 @@
 include pyproject.toml
+include setup.py
 include data/*.txt

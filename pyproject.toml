@@ -1,6 +1,6 @@
 [project]
 name = "djangocraft"
-version = "1.0.0"
+version = "1.0.1"
 description = "A easy way to setup your projects with a easy pre-built authentication"
 authors = [
     {name = "Yash", email = "yashraj504300@gmail.com"},

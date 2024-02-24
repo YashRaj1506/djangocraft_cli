@@ -1,23 +1,36 @@
 import typer
 import subprocess
 import shutil
+import os
 
 app = typer.Typer()
 
 @app.command()
-def djangostart(project_name: str, auth_app_name: str):
+def djangostartauth(project_name: str, auth_app_name: str):
 
-    extraction_command = "pip install build && python -m build && cd dist && tar -xzvf djangocraft-1.0.0.tar.gz && cd .."
+    urls = [
+        "https://github.com/YashRaj1506/djangocraft_cli_datafiles.git",
+    ]
 
-    extraction_execution_for_tar = subprocess.run(extraction_command, shell=True, capture_output=True, text=True)
+    root_dir = os.getcwd()
 
-    if extraction_execution_for_tar.returncode == 0:
-        typer.echo("project started succesfully:")
-        typer.echo(extraction_execution_for_tar.stdout)
+    for url in urls:
+        subprocess.run(["git","clone", url], cwd=root_dir)
 
-    else:
-            typer.echo("Error executing command during result_0:")
-            typer.echo(extraction_execution_for_tar.stderr)    
+    print("Execution at process_0 completed successfully")    
+
+
+    # extraction_command = "pip install build && cd dist && tar -xzvf djangocraft-1.0.4.tar.gz && cd .."
+
+    # extraction_execution_for_tar = subprocess.run(extraction_command, shell=True, capture_output=True, text=True)
+
+    # if extraction_execution_for_tar.returncode == 0:
+    #     typer.echo("project started succesfully:")
+    #     typer.echo(extraction_execution_for_tar.stdout)
+
+    # else:
+    #         typer.echo("Error executing command during result_0:")
+    #         typer.echo(extraction_execution_for_tar.stderr)    
 
     full_command = (f"pip install django && pip freeze > requirements.txt && django-admin startproject {project_name} && cd {project_name} && python manage.py startapp {auth_app_name} && cd - ")
 
@@ -32,7 +45,7 @@ def djangostart(project_name: str, auth_app_name: str):
 
         process()
 
-        shutil.copyfile("dist/djangocraft-1.0.0/data/for_forms.txt", f"{destination_forms}")
+        shutil.copyfile("djangocraft_cli_datafiles/data/for_forms.txt", f"{destination_forms}")
 
         full_command_2 = (f"cd {project_name} && cd {auth_app_name} && touch urls.py && touch forms.py && cd .. && cd ..")
 
@@ -52,9 +65,9 @@ def djangostart(project_name: str, auth_app_name: str):
 
 
 
-        shutil.copyfile("dist/djangocraft-1.0.0/data/for_views.txt", f"{destination_views}")
-        shutil.copyfile("dist/djangocraft-1.0.0/data/for_models.txt", f"{destination_models}")
-        shutil.copyfile("dist/djangocraft-1.0.0/data/for_urls.txt", f"{destination_urls}")
+        shutil.copyfile("djangocraft_cli_datafiles/data/for_views.txt", f"{destination_views}")
+        shutil.copyfile("djangocraft_cli_datafiles/data/for_models.txt", f"{destination_models}")
+        shutil.copyfile("djangocraft_cli_datafiles/data/for_urls.txt", f"{destination_urls}")
 
         full_command_3 = (f"cd {project_name} && cd {auth_app_name} && mkdir templates && cd templates && touch base.html && touch home.html && mkdir registration && cd registration && touch login.html && touch register.html && cd .. && cd ..")
 
@@ -74,10 +87,10 @@ def djangostart(project_name: str, auth_app_name: str):
         destination_register = f"{project_name}/{auth_app_name}/templates/registration/register.html"
         destination_login = f"{project_name}/{auth_app_name}/templates/registration/login.html"
 
-        shutil.copyfile("dist/djangocraft-1.0.0/data/for_basehtml.txt",f"{destination_base}")
-        shutil.copyfile("dist/djangocraft-1.0.0/data/for_homehtml.txt", f"{destination_home}")
-        shutil.copyfile("dist/djangocraft-1.0.0/data/for_loginhtml.txt", f"{destination_login}")
-        shutil.copyfile("dist/djangocraft-1.0.0/data/for_registerhtml.txt", f"{destination_register}")
+        shutil.copyfile("djangocraft_cli_datafiles/data/for_basehtml.txt",f"{destination_base}")
+        shutil.copyfile("djangocraft_cli_datafiles/data/for_homehtml.txt", f"{destination_home}")
+        shutil.copyfile("djangocraft_cli_datafiles/data/for_loginhtml.txt", f"{destination_login}")
+        shutil.copyfile("djangocraft_cli_datafiles/data/for_registerhtml.txt", f"{destination_register}")
 
         file_loc_at_settingpy = f"{project_name}/{project_name}/settings.py"
         urls_at_root = f"{project_name}/{project_name}/urls.py"
@@ -97,7 +110,7 @@ def djangostart(project_name: str, auth_app_name: str):
 
         replace_line_urls2(urls_at_root, 18, auth_app_name)
 
-        shutil.copyfile("dist/djangocraft-1.0.0/data/for_forms_backup.txt", "dist/djangocraft-1.0.0/data/for_forms.txt")
+        shutil.copyfile("djangocraft_cli_datafiles/data/for_forms_backup.txt", "djangocraft_cli_datafiles/data/for_forms.txt")
 
         full_command_4 = (f"cd {project_name} && python manage.py makemigrations && python manage.py migrate && cd ..")
 
@@ -142,7 +155,7 @@ def process():
         for input_name in input_names:
             typer.echo(input_name)
 
-        list_file = "dist/djangocraft-1.0.0/data/for_forms.txt"
+        list_file = "djangocraft_cli_datafiles/data/for_forms.txt"
 
         write_list_to_file(list_file,input_names)
 
@@ -157,6 +170,22 @@ def help():
     data_to_print = "To start the project use code :\n python main.py djangostart ProjectName Authentication_app_Name\n"
     data_to_print2 = "Then you will get the option to setup the field entries on your registration page,\n fill them and you are ready to go with them"
     print(data_to_print + data_to_print2)
+
+@app.command()
+def djangoforpro(project_name : str):
+    full_command = (f"pip install django && pip freeze > requirements.txt && django-admin startproject {project_name} ")
+
+    result = subprocess.run(full_command, shell=True, capture_output=True, text=True)
+
+    if result.returncode == 0:
+        typer.echo("project started succesfully:")
+        typer.echo(result.stdout)
+
+    else:
+        typer.echo("Error executing command:")
+        typer.echo(result.stderr)    
+
+
 
 
 def write_list_to_file(file_path, input_list):

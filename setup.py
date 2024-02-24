@@ -5,7 +5,7 @@ setup(
     # name='djangocraft',
     # packages=find_packages(),
     package_data={
-        'djangocraft': ['data/*.txt'],
+        'djangocraft': ['data/*.txt','*pyproject.toml','*setup.py'],
         },
     # zip_safe= False,
     # install_requires = ['distribute'],    
