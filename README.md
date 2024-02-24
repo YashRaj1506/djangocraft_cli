@@ -43,9 +43,9 @@ djangocraft uses python and a lot of packages like:
 - [@YashRaj](https://github.com/YashRaj1506)
 
 
-## Documentation
+## Installation
 
-[Documentation](https://linktodocumentation)
+        pip install djangocraft
 
 commands:
 
