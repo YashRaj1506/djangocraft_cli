@@ -1,0 +1,12 @@
+version = 1
+
+[[analyzers]]
+name = "python"
+enabled = true
+dependency_file_paths = [
+  "requirements.txt",
+]
+
+[[code_formatters]]
+name = "black"
+enabled = true
